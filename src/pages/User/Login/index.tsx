@@ -21,7 +21,7 @@ import { Alert, message, Tabs } from 'antd';
 import Settings from '../../../../config/defaultSettings';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
-import {CHATGPT, GITHUB, SYSTEM_LOGO} from "@/constants";
+import {GITHUB, SYSTEM_LOGO} from "@/constants";
 
 const ActionIcons = () => {
   const langClassName = useEmotionCss(({ token }) => {
@@ -169,10 +169,22 @@ const Login: React.FC = () => {
           }}
           logo={<img alt="logo" src={SYSTEM_LOGO} />}
           title="level"
-          subTitle={<a href = {CHATGPT} target="_blank" rel="noreferrer"> ChatGPT </a>}
+          subTitle={
+            <a href={GITHUB} style={{ textDecoration: 'none' }}>
+              <FormattedMessage id="pages.layouts.userLayout.title" />
+            </a>
+          }
           initialValues={{
             autoLogin: true,
           }}
+          // actions={[
+          //   <FormattedMessage
+          //     key="loginWith"
+          //     id="pages.login.loginWith"
+          //     defaultMessage="其他登录方式"
+          //   />,
+          //   <ActionIcons key="icons" />,
+          // ]}
           onFinish={async (values) => {
             await handleSubmit(values as API.LoginParams);
           }}
@@ -189,6 +201,13 @@ const Login: React.FC = () => {
                   defaultMessage: '账号密码登录',
                 }),
               },
+              // {
+              //   key: 'mobile',
+              //   label: intl.formatMessage({
+              //     id: 'pages.login.phoneLogin.tab',
+              //     defaultMessage: '手机号登录',
+              //   }),
+              // },
             ]}
           />
 
@@ -210,7 +229,7 @@ const Login: React.FC = () => {
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.username.placeholder',
-                  defaultMessage: '请输入账号',
+                  defaultMessage: '账号',
                 })}
                 rules={[
                   {
@@ -232,7 +251,7 @@ const Login: React.FC = () => {
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.password.placeholder',
-                  defaultMessage: '请输入密码',
+                  defaultMessage: '密码: ant.design',
                 })}
                 rules={[
                   {
@@ -249,6 +268,88 @@ const Login: React.FC = () => {
             </>
           )}
 
+          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
+          {type === 'mobile' && (
+            <>
+              <ProFormText
+                fieldProps={{
+                  size: 'large',
+                  prefix: <MobileOutlined />,
+                }}
+                name="mobile"
+                placeholder={intl.formatMessage({
+                  id: 'pages.login.phoneNumber.placeholder',
+                  defaultMessage: '手机号',
+                })}
+                rules={[
+                  {
+                    required: true,
+                    message: (
+                      <FormattedMessage
+                        id="pages.login.phoneNumber.required"
+                        defaultMessage="请输入手机号！"
+                      />
+                    ),
+                  },
+                  {
+                    pattern: /^1\d{10}$/,
+                    message: (
+                      <FormattedMessage
+                        id="pages.login.phoneNumber.invalid"
+                        defaultMessage="手机号格式错误！"
+                      />
+                    ),
+                  },
+                ]}
+              />
+              <ProFormCaptcha
+                fieldProps={{
+                  size: 'large',
+                  prefix: <LockOutlined />,
+                }}
+                captchaProps={{
+                  size: 'large',
+                }}
+                placeholder={intl.formatMessage({
+                  id: 'pages.login.captcha.placeholder',
+                  defaultMessage: '请输入验证码',
+                })}
+                captchaTextRender={(timing, count) => {
+                  if (timing) {
+                    return `${count} ${intl.formatMessage({
+                      id: 'pages.getCaptchaSecondText',
+                      defaultMessage: '获取验证码',
+                    })}`;
+                  }
+                  return intl.formatMessage({
+                    id: 'pages.login.phoneLogin.getVerificationCode',
+                    defaultMessage: '获取验证码',
+                  });
+                }}
+                name="captcha"
+                rules={[
+                  {
+                    required: true,
+                    message: (
+                      <FormattedMessage
+                        id="pages.login.captcha.required"
+                        defaultMessage="请输入验证码！"
+                      />
+                    ),
+                  },
+                ]}
+                onGetCaptcha={async (phone) => {
+                  const result = await getFakeCaptcha({
+                    phone,
+                  });
+                  if (!result) {
+                    return;
+                  }
+                  message.success('获取验证码成功！验证码为：1234');
+                }}
+              />
+            </>
+          )}
           <div
             style={{
               marginBottom: 24,
@@ -261,10 +362,8 @@ const Login: React.FC = () => {
               style={{
                 float: 'right',
               }}
-              href={GITHUB}
-              target="_blank" rel="noreferrer"
             >
-              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码请告诉我" />
+              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
             </a>
           </div>
         </LoginForm>

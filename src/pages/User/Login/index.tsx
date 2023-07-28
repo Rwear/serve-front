@@ -23,29 +23,29 @@ import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import {GITHUB, SYSTEM_LOGO} from "@/constants";
 
-const ActionIcons = () => {
-  const langClassName = useEmotionCss(({ token }) => {
-    return {
-      marginLeft: '8px',
-      color: 'rgba(0, 0, 0, 0.2)',
-      fontSize: '24px',
-      verticalAlign: 'middle',
-      cursor: 'pointer',
-      transition: 'color 0.3s',
-      '&:hover': {
-        color: token.colorPrimaryActive,
-      },
-    };
-  });
-
-  return (
-    <>
-      <AlipayCircleOutlined key="AlipayCircleOutlined" className={langClassName} />
-      <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={langClassName} />
-      <WeiboCircleOutlined key="WeiboCircleOutlined" className={langClassName} />
-    </>
-  );
-};
+// const ActionIcons = () => {
+//   const langClassName = useEmotionCss(({ token }) => {
+//     return {
+//       marginLeft: '8px',
+//       color: 'rgba(0, 0, 0, 0.2)',
+//       fontSize: '24px',
+//       verticalAlign: 'middle',
+//       cursor: 'pointer',
+//       transition: 'color 0.3s',
+//       '&:hover': {
+//         color: token.colorPrimaryActive,
+//       },
+//     };
+//   });
+//
+//   return (
+//     <>
+//       <AlipayCircleOutlined key="AlipayCircleOutlined" className={langClassName} />
+//       <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={langClassName} />
+//       <WeiboCircleOutlined key="WeiboCircleOutlined" className={langClassName} />
+//     </>
+//   );
+// };
 
 const Lang = () => {
   const langClassName = useEmotionCss(({ token }) => {
@@ -268,88 +268,88 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
-          {type === 'mobile' && (
-            <>
-              <ProFormText
-                fieldProps={{
-                  size: 'large',
-                  prefix: <MobileOutlined />,
-                }}
-                name="mobile"
-                placeholder={intl.formatMessage({
-                  id: 'pages.login.phoneNumber.placeholder',
-                  defaultMessage: '手机号',
-                })}
-                rules={[
-                  {
-                    required: true,
-                    message: (
-                      <FormattedMessage
-                        id="pages.login.phoneNumber.required"
-                        defaultMessage="请输入手机号！"
-                      />
-                    ),
-                  },
-                  {
-                    pattern: /^1\d{10}$/,
-                    message: (
-                      <FormattedMessage
-                        id="pages.login.phoneNumber.invalid"
-                        defaultMessage="手机号格式错误！"
-                      />
-                    ),
-                  },
-                ]}
-              />
-              <ProFormCaptcha
-                fieldProps={{
-                  size: 'large',
-                  prefix: <LockOutlined />,
-                }}
-                captchaProps={{
-                  size: 'large',
-                }}
-                placeholder={intl.formatMessage({
-                  id: 'pages.login.captcha.placeholder',
-                  defaultMessage: '请输入验证码',
-                })}
-                captchaTextRender={(timing, count) => {
-                  if (timing) {
-                    return `${count} ${intl.formatMessage({
-                      id: 'pages.getCaptchaSecondText',
-                      defaultMessage: '获取验证码',
-                    })}`;
-                  }
-                  return intl.formatMessage({
-                    id: 'pages.login.phoneLogin.getVerificationCode',
-                    defaultMessage: '获取验证码',
-                  });
-                }}
-                name="captcha"
-                rules={[
-                  {
-                    required: true,
-                    message: (
-                      <FormattedMessage
-                        id="pages.login.captcha.required"
-                        defaultMessage="请输入验证码！"
-                      />
-                    ),
-                  },
-                ]}
-                onGetCaptcha={async (phone) => {
-                  const result = await getFakeCaptcha({
-                    phone,
-                  });
-                  if (!result) {
-                    return;
-                  }
-                  message.success('获取验证码成功！验证码为：1234');
-                }}
-              />
-            </>
-          )}
+          {/*{status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}*/}
+          {/*{type === 'mobile' && (*/}
+          {/*  <>*/}
+          {/*    <ProFormText*/}
+          {/*      fieldProps={{*/}
+          {/*        size: 'large',*/}
+          {/*        prefix: <MobileOutlined />,*/}
+          {/*      }}*/}
+          {/*      name="mobile"*/}
+          {/*      placeholder={intl.formatMessage({*/}
+          {/*        id: 'pages.login.phoneNumber.placeholder',*/}
+          {/*        defaultMessage: '手机号',*/}
+          {/*      })}*/}
+          {/*      rules={[*/}
+          {/*        {*/}
+          {/*          required: true,*/}
+          {/*          message: (*/}
+          {/*            <FormattedMessage*/}
+          {/*              id="pages.login.phoneNumber.required"*/}
+          {/*              defaultMessage="请输入手机号！"*/}
+          {/*            />*/}
+          {/*          ),*/}
+          {/*        },*/}
+          {/*        {*/}
+          {/*          pattern: /^1\d{10}$/,*/}
+          {/*          message: (*/}
+          {/*            <FormattedMessage*/}
+          {/*              id="pages.login.phoneNumber.invalid"*/}
+          {/*              defaultMessage="手机号格式错误！"*/}
+          {/*            />*/}
+          {/*          ),*/}
+          {/*        },*/}
+          {/*      ]}*/}
+          {/*    />*/}
+          {/*    <ProFormCaptcha*/}
+          {/*      fieldProps={{*/}
+          {/*        size: 'large',*/}
+          {/*        prefix: <LockOutlined />,*/}
+          {/*      }}*/}
+          {/*      captchaProps={{*/}
+          {/*        size: 'large',*/}
+          {/*      }}*/}
+          {/*      placeholder={intl.formatMessage({*/}
+          {/*        id: 'pages.login.captcha.placeholder',*/}
+          {/*        defaultMessage: '请输入验证码',*/}
+          {/*      })}*/}
+          {/*      captchaTextRender={(timing, count) => {*/}
+          {/*        if (timing) {*/}
+          {/*          return `${count} ${intl.formatMessage({*/}
+          {/*            id: 'pages.getCaptchaSecondText',*/}
+          {/*            defaultMessage: '获取验证码',*/}
+          {/*          })}`;*/}
+          {/*        }*/}
+          {/*        return intl.formatMessage({*/}
+          {/*          id: 'pages.login.phoneLogin.getVerificationCode',*/}
+          {/*          defaultMessage: '获取验证码',*/}
+          {/*        });*/}
+          {/*      }}*/}
+          {/*      name="captcha"*/}
+          {/*      rules={[*/}
+          {/*        {*/}
+          {/*          required: true,*/}
+          {/*          message: (*/}
+          {/*            <FormattedMessage*/}
+          {/*              id="pages.login.captcha.required"*/}
+          {/*              defaultMessage="请输入验证码！"*/}
+          {/*            />*/}
+          {/*          ),*/}
+          {/*        },*/}
+          {/*      ]}*/}
+          {/*      onGetCaptcha={async (phone) => {*/}
+          {/*        const result = await getFakeCaptcha({*/}
+          {/*          phone,*/}
+          {/*        });*/}
+          {/*        if (!result) {*/}
+          {/*          return;*/}
+          {/*        }*/}
+          {/*        message.success('获取验证码成功！验证码为：1234');*/}
+          {/*      }}*/}
+          {/*    />*/}
+          {/*  </>*/}
+          {/*)}*/}
           <div
             style={{
               marginBottom: 24,
@@ -362,8 +362,11 @@ const Login: React.FC = () => {
               style={{
                 float: 'right',
               }}
+              href={GITHUB}
+              target="_blank" // Set the target attribute to "_blank" to open the link in a new tab/window
+              rel="noopener noreferrer" // Recommended for security and performance reasons when using "_blank"
             >
-              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
+              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码请联系我" />
             </a>
           </div>
         </LoginForm>
